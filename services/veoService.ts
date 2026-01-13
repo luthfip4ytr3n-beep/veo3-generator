@@ -1,8 +1,22 @@
 import { GoogleGenAI } from "@google/genai";
 import { VeoSettings, ImageReference } from "../types";
 
+// ============================================================================
+// KONFIGURASI API KEY (KHUSUS LOCAL HOST)
+// ============================================================================
+// Jika Anda menjalankan di localhost dan ingin menggunakan API Key langsung,
+// tempelkan API Key Anda di antara tanda kutip di bawah ini.
+//
+// CONTOH: const LOCAL_API_KEY = "AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxx";
+//
+const LOCAL_API_KEY = ""; 
+// ============================================================================
+
 // Helper to validate and get API Key
 export const ensureApiKey = async (): Promise<boolean> => {
+  // Jika LOCAL_API_KEY diisi, anggap key sudah siap (bypass check AI Studio)
+  if (LOCAL_API_KEY) return true;
+
   if (window.aistudio && window.aistudio.hasSelectedApiKey) {
     const hasKey = await window.aistudio.hasSelectedApiKey();
     return hasKey;
@@ -11,6 +25,9 @@ export const ensureApiKey = async (): Promise<boolean> => {
 };
 
 export const promptForApiKey = async () => {
+  // Jika LOCAL_API_KEY diisi, tidak perlu membuka popup
+  if (LOCAL_API_KEY) return;
+
   if (window.aistudio && window.aistudio.openSelectKey) {
     await window.aistudio.openSelectKey();
   } else {
@@ -26,17 +43,18 @@ export const generateVeoVideo = async (
 ): Promise<string> => {
   
   // 1. Initialize Client
-  // The API key is injected into process.env.API_KEY by the environment after selection
-  const apiKey = process.env.API_KEY;
+  // Gunakan LOCAL_API_KEY jika ada, jika tidak gunakan dari environment (AI Studio)
+  const apiKey = LOCAL_API_KEY || process.env.API_KEY;
   
   if (!apiKey) {
-    throw new Error("API Key not found. Please connect via AI Studio.");
+    throw new Error("API Key not found. Please set LOCAL_API_KEY in services/veoService.ts or connect via UI.");
   }
   
   const ai = new GoogleGenAI({ apiKey });
 
   // 2. Configure Model and Payload
-  const modelName = settings.model || 'veo-3.0-generate-preview';
+  // Default to the latest high-quality preview
+  const modelName = settings.model || 'veo-3.1-generate-preview';
   
   const config: any = {
     numberOfVideos: 1,
