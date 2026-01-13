@@ -1,0 +1,5 @@
+{
+  "name": "Veo3 Studio",
+  "description": "Professional video generation using Google's Veo 3 model. Supports text-to-video and image-to-video with customizable aspect ratios and resolutions.",
+  "requestFramePermissions": []
+}

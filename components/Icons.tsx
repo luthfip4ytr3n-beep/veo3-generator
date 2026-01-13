@@ -1,0 +1,46 @@
+import React from 'react';
+import { 
+  Clapperboard, 
+  Upload, 
+  Settings, 
+  Play, 
+  Download, 
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  Key,
+  Video,
+  Image as ImageIcon,
+  Plus, 
+  Trash2, 
+  Copy, 
+  Check, 
+  Users, 
+  MessageSquare, 
+  Aperture, 
+  Sparkles,
+  Wand2
+} from 'lucide-react';
+
+export { 
+  Clapperboard, 
+  Upload, 
+  Settings, 
+  Play, 
+  Download, 
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  Key,
+  Video,
+  ImageIcon,
+  Plus, 
+  Trash2, 
+  Copy, 
+  Check, 
+  Users, 
+  MessageSquare, 
+  Aperture, 
+  Sparkles,
+  Wand2
+};
