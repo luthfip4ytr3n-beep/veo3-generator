@@ -105,7 +105,7 @@ const SelectField = ({ label, value, onChange, options, className = "" }: any) =
         <option value="">Pilih...</option>
         {options.map((opt: any, idx: number) => {
           const labelVal = typeof opt === 'string' ? opt : opt.label;
-          const valVal = typeof opt === 'string' ? opt : opt.label; 
+          const valVal = typeof opt === 'string' ? opt : opt.value; 
           return <option key={idx} value={valVal}>{labelVal}</option>;
         })}
       </select>
@@ -244,9 +244,9 @@ export const PromptBuilder: React.FC<PromptBuilderProps> = ({ onUsePrompt }) => 
 
   const getPromptEnglish = () => {
     // Helper to find English value
-    const getEngRace = (val: string) => RACE_OPTIONS.find(r => r.label === val)?.value || val;
-    const getEngGender = (val: string) => GENDER_OPTIONS.find(r => r.label === val)?.value || val;
-    const getEngVoice = (val: string) => VOICE_OPTIONS.find(r => r.label === val)?.value || val;
+    const getEngRace = (val: string) => RACE_OPTIONS.find(r => r.label === val || r.value === val)?.value || val;
+    const getEngGender = (val: string) => GENDER_OPTIONS.find(r => r.label === val || r.value === val)?.value || val;
+    const getEngVoice = (val: string) => VOICE_OPTIONS.find(r => r.label === val || r.value === val)?.value || val;
 
     let parts = [];
 

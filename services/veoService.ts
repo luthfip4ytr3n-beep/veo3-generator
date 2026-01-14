@@ -12,6 +12,18 @@ import { VeoSettings, ImageReference } from "../types";
 const LOCAL_API_KEY = ""; 
 // ============================================================================
 
+// Helper aman untuk membaca env variable tanpa crash di browser
+const getEnvApiKey = () => {
+  try {
+    if (typeof process !== "undefined" && process.env) {
+      return process.env.API_KEY;
+    }
+  } catch (e) {
+    // Ignore error jika process tidak didefinisikan
+  }
+  return undefined;
+};
+
 // Helper to validate and get API Key
 export const ensureApiKey = async (): Promise<boolean> => {
   // Jika LOCAL_API_KEY diisi, anggap key sudah siap (bypass check AI Studio)
@@ -43,8 +55,8 @@ export const generateVeoVideo = async (
 ): Promise<string> => {
   
   // 1. Initialize Client
-  // Gunakan LOCAL_API_KEY jika ada, jika tidak gunakan dari environment (AI Studio)
-  const apiKey = LOCAL_API_KEY || process.env.API_KEY;
+  // Gunakan LOCAL_API_KEY jika ada, jika tidak gunakan helper aman untuk process.env
+  const apiKey = LOCAL_API_KEY || getEnvApiKey();
   
   if (!apiKey) {
     throw new Error("API Key not found. Please set LOCAL_API_KEY in services/veoService.ts or connect via UI.");
